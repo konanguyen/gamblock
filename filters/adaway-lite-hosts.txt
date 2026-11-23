@@ -1,6 +1,6 @@
 # Gamblock - Gambling hosts LITE (AdAway)
 # Homepage: https://github.com/konanguyen/gamblock
-# Version: 2026.1123.1312
+# Version: 2026.1123.1313
 # Entries: 3095
 # Lite tier: StevenBlack/hosts + curated list only. Use the full filters or DNS-level blocking for full coverage.
 #

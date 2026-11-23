@@ -1,8 +1,8 @@
 # Gamblock - Gambling & Betting hosts (AdAway)
 # Chan cac trang ca cuoc, casino va ca do truc tuyen.
 # Homepage: https://github.com/konanguyen/gamblock
-# Version: 2026.1123.1312
-# Last modified: 2026-11-23 13:12 UTC
+# Version: 2026.1123.1313
+# Last modified: 2026-11-23 13:13 UTC
 # Entries: 397323
 # Cosmetic / IP rules only available in the AdGuard and uBlock Origin filters.
 # Sources: blocklistproject/Lists, StevenBlack/hosts, hagezi/dns-blocklists and curated list. See README.md.

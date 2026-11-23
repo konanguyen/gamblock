@@ -154,8 +154,14 @@ if (Test-Path $IpPath) {
 # to block direct navigation (typing the URL in the address bar).
 # Keep this compact: only high-value curated domains get a $document rule.
 $DocumentRules = @()
-if ($SourceDomains.ContainsKey('curated-domains.txt')) {
-    foreach ($d in $SourceDomains['curated-domains.txt']) { $DocumentRules += ('||{0}^$document' -f $d) }
+$CuratedPath = Join-Path $DataDir 'curated-domains.txt'
+if (Test-Path $CuratedPath) {
+    $CuratedSet = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
+    foreach ($line in [System.IO.File]::ReadAllLines($CuratedPath)) {
+        $d = $line.Trim().TrimEnd('.').ToLowerInvariant()
+        if ($d -and -not $d.StartsWith('#') -and $ValidDomain.IsMatch($d)) { [void]$CuratedSet.Add($d) }
+    }
+    foreach ($d in $CuratedSet) { $DocumentRules += ('||{0}^$document' -f $d) }
 }
 $DocumentCount = $DocumentRules.Count
 $ExtraCount = $Cosmetic.Count + $IpRules.Count + $DocumentCount

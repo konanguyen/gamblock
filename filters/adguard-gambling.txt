@@ -1,13 +1,13 @@
 ! Title: Gamblock - Gambling & Betting Blocklist (AdGuard)
 ! Description: Chan cac trang ca cuoc, casino va ca do truc tuyen.
 ! Homepage: https://github.com/konanguyen/gamblock
-! Version: 2026.1123.1312
-! Last modified: 2026-11-23 13:12 UTC
+! Version: 2026.1123.1313
+! Last modified: 2026-11-23 13:13 UTC
 ! Expires: 1 day
 ! Syntax: Adblock Plus
 ! Entries: 397323
-! Extra rules: 19
-! Document rules: 15
+! Extra rules: 75
+! Document rules: 71
 ! Sources: blocklistproject/Lists, StevenBlack/hosts, hagezi/dns-blocklists and curated list. See README.md.
 !
 ||0-10-7.casino^
@@ -397334,21 +397334,77 @@
 ||zzzzbet.com.br^
 ||zzzzgame.com^
 ||154.82.109.163^
+||1xbet.com^$document
+||22bet.com^$document
+||888.com^$document
+||bet365.com^$document
+||betano.com^$document
+||betfair.com^$document
+||betmgm.com^$document
+||betsson.com^$document
+||bettom.com^$document
+||betvictor.com^$document
+||betway.com^$document
+||bwin.com^$document
+||caesars.com^$document
+||coral.co.uk^$document
+||dafabet.com^$document
+||draftkings.com^$document
 ||fanatics.com^$document
+||fanduel.com^$document
+||fun88.com^$document
+||kwiff.com^$document
+||ladbrokes.com^$document
+||marathonbet.com^$document
+||midnite.com^$document
+||paddypower.com^$document
+||partypoker.com^$document
+||pinnacle.com^$document
+||pokerstars.com^$document
+||roobet.com^$document
+||sbobet.com^$document
+||skybet.com^$document
+||stake.com^$document
+||talksportbet.com^$document
+||thescorebet.com^$document
+||unibet.com^$document
+||williamhill.com^$document
+||adqc.net^$document
+||3bet.adqc.net^$document
 ||b52club.adqc.net^$document
+||bom88.adqc.net^$document
 ||bu88.adqc.net^$document
 ||da88.adqc.net^$document
+||go88.adqc.net^$document
 ||hdbet.adqc.net^$document
+||sun88.adqc.net^$document
+||12bet.com^$document
+||1337bid.com^$document
+||138.com^$document
+||180bets.com^$document
+||188bet.com^$document
 ||20timebet.com^$document
+||8xbet.com^$document
+||bk8.com^$document
 ||b52club.vn^$document
+||bin88.com^$document
 ||dv88.com^$document
+||fb88.com^$document
+||gem88.com^$document
 ||hitclub.vip^$document
+||i9bet.com^$document
 ||iwin.com.vn^$document
+||m88.com^$document
+||net88.com^$document
 ||ngc.bet^$document
+||qh88.com^$document
+||sodo66.com^$document
 ||sunwin.vn^$document
 ||tailoc888.net^$document
 ||vev88.bet^$document
+||vn88.com^$document
 ||vsbet.com^$document
+||w88.com^$document
 ! --- Cosmetic rules ---
 animehay17.site,animehay.tv,ahay.in##img[src*="/ad_banner/"]
 animehay17.site,animehay.tv,ahay.in##a:has(img[src*="/ad_banner/"])
