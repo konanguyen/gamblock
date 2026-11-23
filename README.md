@@ -84,6 +84,23 @@ https://raw.githubusercontent.com/konanguyen/gamblock/master/
 | AdAway (low-end devices) | `filters/adaway-lite-hosts.txt` | https://raw.githubusercontent.com/konanguyen/gamblock/master/filters/adaway-lite-hosts.txt |
 | Pi-hole / generic DNS sinkhole | `data/domains.txt` | https://raw.githubusercontent.com/konanguyen/gamblock/master/data/domains.txt |
 
+### Rule syntax (official reference)
+
+Filters follow [AdGuard's own filter syntax](https://adguard.com/kb/general/ad-filtering/create-own-filters/),
+which is based on Adblock Plus rules:
+
+```adblock
+||adqc.net^              ! block host and all subdomains (sub-requests)
+||188bet.com^$document    ! also block direct navigation to the site
+animehay17.site##img[...] ! cosmetic rule: hide an element on that site
+@@||example.com^         ! exception: unblock
+```
+
+Important detail from the docs: a plain `||domain^` rule applies to **sub-requests only**.
+If someone types the gambling site directly into the address bar, it still opens. That is why
+the filters include `$document` variants for every curated high-priority domain. DNS-level
+blocking (hosts / AdGuard Home / Pi-hole) blocks both cases automatically.
+
 ### Rule limits — read this before subscribing
 
 AdGuard Browser Extension on Chromium (Manifest V3) has a hard cap on **user-added rules**

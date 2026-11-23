@@ -150,7 +150,15 @@ if (Test-Path $IpPath) {
         if ($ip -and -not $ip.StartsWith('#') -and $ip -match '^\d{1,3}(\.\d{1,3}){3}$') { $IpRules += "||$ip^" }
     }
 }
-$ExtraCount = $Cosmetic.Count + $IpRules.Count
+# Basic ||domain^ rules apply to sub-requests only. $document variants are needed
+# to block direct navigation (typing the URL in the address bar).
+# Keep this compact: only high-value curated domains get a $document rule.
+$DocumentRules = @()
+if ($SourceDomains.ContainsKey('curated-domains.txt')) {
+    foreach ($d in $SourceDomains['curated-domains.txt']) { $DocumentRules += ('||{0}^$document' -f $d) }
+}
+$DocumentCount = $DocumentRules.Count
+$ExtraCount = $Cosmetic.Count + $IpRules.Count + $DocumentCount
 
 $Utf8NoBom = [System.Text.UTF8Encoding]::new($false)
 $Date      = (Get-Date).ToUniversalTime().ToString('yyyy.MMdd.HHmm')
@@ -176,10 +184,12 @@ $AdGuard.Add('! Expires: 1 day')
 $AdGuard.Add('! Syntax: Adblock Plus')
 $AdGuard.Add("! Entries: $Total")
 $AdGuard.Add("! Extra rules: $ExtraCount")
+$AdGuard.Add("! Document rules: $DocumentCount")
 $AdGuard.Add("! $SourceNote")
 $AdGuard.Add('!')
 foreach ($d in $Sorted) { $AdGuard.Add("||$d^") }
 foreach ($r in $IpRules) { $AdGuard.Add($r) }
+foreach ($r in $DocumentRules) { $AdGuard.Add($r) }
 if ($Cosmetic.Count) { $AdGuard.Add('! --- Cosmetic rules ---'); foreach ($r in $Cosmetic) { $AdGuard.Add($r) } }
 Write-Filter -Path (Join-Path $FilterDir 'adguard-gambling.txt') -Lines $AdGuard.ToArray()
 
@@ -193,10 +203,12 @@ $UBlock.Add('! Expires: 1 day')
 $UBlock.Add('! Syntax: Adblock Plus')
 $UBlock.Add("! Entries: $Total")
 $UBlock.Add("! Extra rules: $ExtraCount")
+$UBlock.Add("! Document rules: $DocumentCount")
 $UBlock.Add("! $SourceNote")
 $UBlock.Add('!')
 foreach ($d in $Sorted) { $UBlock.Add("||$d^") }
 foreach ($r in $IpRules) { $UBlock.Add($r) }
+foreach ($r in $DocumentRules) { $UBlock.Add($r) }
 if ($Cosmetic.Count) { $UBlock.Add('! --- Cosmetic rules ---'); foreach ($r in $Cosmetic) { $UBlock.Add($r) } }
 Write-Filter -Path (Join-Path $FilterDir 'ublock-origin-gambling.txt') -Lines $UBlock.ToArray()
 
@@ -226,10 +238,12 @@ $AdGuardLite.Add('! Expires: 1 day')
 $AdGuardLite.Add('! Syntax: Adblock Plus')
 $AdGuardLite.Add("! Entries: $LiteTotal")
 $AdGuardLite.Add("! Extra rules: $ExtraCount")
+$AdGuardLite.Add("! Document rules: $DocumentCount")
 $AdGuardLite.Add("! $LiteNote")
 $AdGuardLite.Add('!')
 foreach ($d in $LiteSorted) { $AdGuardLite.Add("||$d^") }
 foreach ($r in $IpRules) { $AdGuardLite.Add($r) }
+foreach ($r in $DocumentRules) { $AdGuardLite.Add($r) }
 if ($Cosmetic.Count) { $AdGuardLite.Add('! --- Cosmetic rules ---'); foreach ($r in $Cosmetic) { $AdGuardLite.Add($r) } }
 Write-Filter -Path (Join-Path $FilterDir 'adguard-lite.txt') -Lines $AdGuardLite.ToArray()
 
@@ -243,10 +257,12 @@ $UBlockLite.Add('! Expires: 1 day')
 $UBlockLite.Add('! Syntax: Adblock Plus')
 $UBlockLite.Add("! Entries: $LiteTotal")
 $UBlockLite.Add("! Extra rules: $ExtraCount")
+$UBlockLite.Add("! Document rules: $DocumentCount")
 $UBlockLite.Add("! $LiteNote")
 $UBlockLite.Add('!')
 foreach ($d in $LiteSorted) { $UBlockLite.Add("||$d^") }
 foreach ($r in $IpRules) { $UBlockLite.Add($r) }
+foreach ($r in $DocumentRules) { $UBlockLite.Add($r) }
 if ($Cosmetic.Count) { $UBlockLite.Add('! --- Cosmetic rules ---'); foreach ($r in $Cosmetic) { $UBlockLite.Add($r) } }
 Write-Filter -Path (Join-Path $FilterDir 'ublock-lite.txt') -Lines $UBlockLite.ToArray()
 

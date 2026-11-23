@@ -1,12 +1,13 @@
 ! Title: Gamblock - Gambling Blocklist LITE (AdGuard)
 ! Description: Compact set for browser extensions with dynamic rule limits.
 ! Homepage: https://github.com/konanguyen/gamblock
-! Version: 2026.1123.1310
-! Last modified: 2026-11-23 13:10 UTC
+! Version: 2026.1123.1312
+! Last modified: 2026-11-23 13:12 UTC
 ! Expires: 1 day
 ! Syntax: Adblock Plus
 ! Entries: 3095
-! Extra rules: 4
+! Extra rules: 19
+! Document rules: 15
 ! Lite tier: StevenBlack/hosts + curated list only. Use the full filters or DNS-level blocking for full coverage.
 !
 ||007winand.taive.app^
@@ -3105,6 +3106,21 @@
 ||zowin.st^
 ||zowin.vg^
 ||154.82.109.163^
+||fanatics.com^$document
+||b52club.adqc.net^$document
+||bu88.adqc.net^$document
+||da88.adqc.net^$document
+||hdbet.adqc.net^$document
+||20timebet.com^$document
+||b52club.vn^$document
+||dv88.com^$document
+||hitclub.vip^$document
+||iwin.com.vn^$document
+||ngc.bet^$document
+||sunwin.vn^$document
+||tailoc888.net^$document
+||vev88.bet^$document
+||vsbet.com^$document
 ! --- Cosmetic rules ---
 animehay17.site,animehay.tv,ahay.in##img[src*="/ad_banner/"]
 animehay17.site,animehay.tv,ahay.in##a:has(img[src*="/ad_banner/"])
