@@ -1,0 +1,3 @@
+# IP landing page cua quang cao i9 (bannes /ad_banner/i9.gif) tren animehay17.site.
+# Chi ap dung cho AdGuard / uBlock Origin (hosts khong chan duoc theo IP).
+154.82.109.163

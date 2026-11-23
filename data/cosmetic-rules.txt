@@ -1,0 +1,6 @@
+# Cosmetic rules (AdGuard / uBlock Origin only). Khong ap dung duoc cho hosts.
+# Phat hien tren animehay17.site ngay 2026-11-23.
+# An cac banner / catfish / popup quang cao ca do duoc chen bang JS.
+animehay17.site,animehay.tv,ahay.in##img[src*="/ad_banner/"]
+animehay17.site,animehay.tv,ahay.in##a:has(img[src*="/ad_banner/"])
+animehay17.site,animehay.tv,ahay.in##div:has(> img[src*="/ad_banner/"])

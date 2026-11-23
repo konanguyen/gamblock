@@ -1,0 +1,48 @@
+{
+  "title": "Xem Phim Anime - Hoạt Hình Trung Quốc Hay Online || AnimeHay",
+  "url": "https://animehay17.site/",
+  "items": [
+    {
+      "tag": "a",
+      "text": "Thể thao",
+      "url": "https://animehay17.site/the-loai/the-thao-20.html",
+      "link": "https://animehay17.site/the-loai/the-thao-20.html",
+      "parent": "<div class=\"flex flex-wrap\">\n                                                                                                                                        <a href=\"/the-loai/anime-1.html\" title=\"Thể loại Anime\">\n                                        Anime                                    </a>\n                                                                                                        <a href=\"/the-loai/hanh-dong-2.html\" title=\"Thể loại Hành động\">\n                                        Hành động                                    </a>\n                                 "
+    },
+    {
+      "tag": "img",
+      "text": "",
+      "url": "https://animehay17.site/ad_banner/bom88.gif?v=2.2",
+      "link": "",
+      "parent": "<div style=\"margin: 0px;\"><img src=\"/ad_banner/bom88.gif?v=2.2\" width=\"600\" height=\"60\"></div>"
+    },
+    {
+      "tag": "img",
+      "text": "",
+      "url": "https://animehay17.site/ad_banner/go88.gif?v=1.9.2",
+      "link": "",
+      "parent": "<div style=\"margin: 0px;\"><img src=\"/ad_banner/go88.gif?v=1.9.2\" width=\"600\" height=\"60\"></div>"
+    },
+    {
+      "tag": "img",
+      "text": "",
+      "url": "https://animehay17.site/ad_banner/hdbet.gif?v=2.5",
+      "link": "",
+      "parent": "<div style=\"display: inline-block; position: relative;\"><img src=\"/ad_banner/hdbet.gif?v=2.5\" loading=\"lazy\" width=\"600\" height=\"60\" style=\"max-width: 100%;\"><img src=\"/ad_banner/sun88.gif?v=1.5\" loading=\"lazy\" width=\"600\" height=\"60\" style=\"max-width: 100%;\"><img src=\"/ad_banner/3bet.gif?v=1.9\" loading=\"lazy\" width=\"600\" height=\"60\" style=\"max-width: 100%;\"><div style=\"position: absolute; bottom: 100%; right: 0px; padding: 5px 10px; background: rgb(161, 90, 90); color: rgb(255, 255, 255); cursor: pointer;\">X</div></div>"
+    },
+    {
+      "tag": "img",
+      "text": "",
+      "url": "https://animehay17.site/ad_banner/3bet.gif?v=1.9",
+      "link": "",
+      "parent": "<div style=\"display: inline-block; position: relative;\"><img src=\"/ad_banner/hdbet.gif?v=2.5\" loading=\"lazy\" width=\"600\" height=\"60\" style=\"max-width: 100%;\"><img src=\"/ad_banner/sun88.gif?v=1.5\" loading=\"lazy\" width=\"600\" height=\"60\" style=\"max-width: 100%;\"><img src=\"/ad_banner/3bet.gif?v=1.9\" loading=\"lazy\" width=\"600\" height=\"60\" style=\"max-width: 100%;\"><div style=\"position: absolute; bottom: 100%; right: 0px; padding: 5px 10px; background: rgb(161, 90, 90); color: rgb(255, 255, 255); cursor: pointer;\">X</div></div>"
+    }
+  ],
+  "hosts": {
+    "www.googletagmanager.com": 1,
+    "www.facebook.com": 1,
+    "animehay.tv": 1,
+    "ahay.in": 1,
+    "static.cloudflareinsights.com": 1
+  }
+}

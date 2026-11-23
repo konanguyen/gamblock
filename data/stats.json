@@ -1,0 +1,11 @@
+{
+    "generated_at":  "2026-11-23 12:58 UTC",
+    "total_domains":  397323,
+    "sources":  {
+                    "blocklistproject-gambling.txt":  342614,
+                    "stevenblack-gambling-hosts.txt":  3080,
+                    "hagezi-adblock-gambling-medium.txt":  51614,
+                    "hagezi-domains-gambling-medium.txt":  0,
+                    "curated-domains.txt":  15
+                }
+}

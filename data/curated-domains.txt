@@ -1,0 +1,91 @@
+# Curated gambling / betting domains (manually added from web research)
+# Mỗi dòng là một domain hợp lệ. Dòng bắt đầu bằng # là ghi chú.
+# Cập nhật: 2026-11-23
+#
+# Nguồn tham khảo:
+# - https://analytics.explodingtopics.com/website/global/gambling (most visited gambling sites)
+# - https://olbg.com/bookmakers.php / https://independent.co.uk/sport/football/... (UK bookmakers)
+# - https://si.com/betting/usa / https://sportshandle.com/best-sports-betting-sites/ (US sportsbooks)
+# - https://kqbd.mobi/top-nha-cai-uy-tin / https://cadobongdahomnay.com/ (Vietnamese bookmakers)
+# - https://github.com/blocklistproject/Lists/blob/master/gambling.txt
+# - https://github.com/hagezi/dns-blocklists (Gambling lists)
+# - https://github.com/StevenBlack/hosts (gambling-only extension)
+
+# --- International bookmakers / casinos ---
+1xbet.com
+22bet.com
+888.com
+bet365.com
+betano.com
+betfair.com
+betmgm.com
+betsson.com
+bettom.com
+betvictor.com
+betway.com
+bwin.com
+caesars.com
+coral.co.uk
+dafabet.com
+draftkings.com
+fanatics.com
+fanduel.com
+fun88.com
+kwiff.com
+ladbrokes.com
+marathonbet.com
+midnite.com
+paddypower.com
+partypoker.com
+pinnacle.com
+pokerstars.com
+roobet.com
+sbobet.com
+skybet.com
+stake.com
+talksportbet.com
+thescorebet.com
+unibet.com
+williamhill.com
+
+# --- Gambling ad networks discovered on animehay17.site (2026-11-23) ---
+# Trang animehay chèn banner/catfish/popunder tro den cac subdomain adqc.net.
+adqc.net
+3bet.adqc.net
+b52club.adqc.net
+bom88.adqc.net
+bu88.adqc.net
+da88.adqc.net
+go88.adqc.net
+hdbet.adqc.net
+sun88.adqc.net
+
+# --- Vietnamese / Asian bookmakers ---
+12bet.com
+1337bid.com
+138.com
+180bets.com
+188bet.com
+20timebet.com
+8xbet.com
+bk8.com
+b52club.vn
+bin88.com
+dv88.com
+fb88.com
+fun88.com
+gem88.com
+hitclub.vip
+i9bet.com
+iwin.com.vn
+m88.com
+net88.com
+ngc.bet
+qh88.com
+sodo66.com
+sunwin.vn
+tailoc888.net
+vev88.bet
+vn88.com
+vsbet.com
+w88.com
