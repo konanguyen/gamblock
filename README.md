@@ -80,6 +80,17 @@ powershell -ExecutionPolicy Bypass -File .\scripts\update-filters.ps1 -SkipDownl
 Để thêm domain thủ công, sửa `data/curated-domains.txt`, thêm rule ẩn vào `data/cosmetic-rules.txt`,
 rồi chạy lại script.
 
+## License
+
+Repo này dùng **GPL-3.0-or-later** (xem `LICENSE`). Lý do: bộ filter gộp dữ liệu từ
+[HaGeZi](https://github.com/hagezi/dns-blocklists) (GPL-3.0), [StevenBlack](https://github.com/StevenBlack/hosts)
+(MIT) và [blocklistproject](https://github.com/blocklistproject/Lists) (Unlicense/public domain).
+GPL-3.0 là lựa chọn "bao quát nhất": đáp ứng nghĩa vụ copyleft của HaGeZi mà vẫn tương thích với
+MIT và Unlicense. Xem `NOTICE` để biết chi tiết attribution.
+
+Nếu bạn muốn license kiểu MIT (tự do hơn cho người dùng cuối), hãy bỏ nguồn HaGeZi khỏi
+`scripts/update-filters.ps1` và regenerate filter trước khi đổi license.
+
 ## Lưu ý
 
 - Đây là danh sách chặn tổng quát: có thể có false positive. Nếu một site hợp lệ bị chặn, hãy thêm

@@ -1,0 +1,26 @@
+Gamblock - Gambling / betting blocklist compilation
+Copyright (C) 2026 Gamblock contributors
+
+This product includes data and/or is derived from the following third-party sources:
+
+1. HaGeZi's DNS Blocklists - Gambling (medium)
+   https://github.com/hagezi/dns-blocklists
+   License: GNU General Public License v3.0 (GPL-3.0)
+   https://github.com/hagezi/dns-blocklists/blob/main/LICENSE
+
+2. StevenBlack/hosts - gambling-only extension
+   https://github.com/StevenBlack/hosts
+   License: MIT License
+   https://github.com/StevenBlack/hosts/blob/master/license.txt
+   Copyright (c) 2026 Steven Black
+
+3. blocklistproject/Lists - gambling.txt
+   https://github.com/blocklistproject/Lists
+   License: Unlicense (public domain)
+   https://github.com/blocklistproject/Lists/blob/master/LICENSE
+
+The curated domain list (data/curated-domains.txt), the cosmetic rules, the
+IP rules and the generator scripts were compiled for this project and are
+licensed under GPL-3.0-or-later, together with the rest of this repository.
+
+The full text of the GNU General Public License version 3 is in the LICENSE file.
