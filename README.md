@@ -13,9 +13,12 @@ from a live browser session over CDP (`localhost:9222`).
 
 ```
 filters/
-  adguard-gambling.txt        # AdGuard / Adblock Plus syntax (||domain^)
-  ublock-origin-gambling.txt  # uBlock Origin syntax (||domain^)
-  adaway-hosts.txt            # Hosts format (0.0.0.0 domain)
+  adguard-gambling.txt        # Full AdGuard / Adblock Plus list (397k rules)
+  ublock-origin-gambling.txt  # Full uBlock Origin list (397k rules)
+  adaway-hosts.txt            # Full hosts list (0.0.0.0 domain)
+  adguard-lite.txt            # Lite AdGuard list (~3.1k rules) for browser extensions
+  ublock-lite.txt             # Lite uBlock Origin list (~3.1k rules)
+  adaway-lite-hosts.txt       # Lite hosts list for low-end devices
 data/
   domains.txt                 # All merged, sorted, deduplicated domains
   curated-domains.txt         # Manually curated brands + domains found in the wild
@@ -72,17 +75,38 @@ https://raw.githubusercontent.com/konanguyen/gamblock/master/
 
 | Blocker | File to use | Direct URL |
 |---|---|---|
-| uBlock Origin | `filters/ublock-origin-gambling.txt` | https://raw.githubusercontent.com/konanguyen/gamblock/master/filters/ublock-origin-gambling.txt |
-| AdGuard (app / browser extension) | `filters/adguard-gambling.txt` | https://raw.githubusercontent.com/konanguyen/gamblock/master/filters/adguard-gambling.txt |
+| uBlock Origin (**recommended for browsers**) | `filters/ublock-lite.txt` | https://raw.githubusercontent.com/konanguyen/gamblock/master/filters/ublock-lite.txt |
+| uBlock Origin (full, powerful devices only) | `filters/ublock-origin-gambling.txt` | https://raw.githubusercontent.com/konanguyen/gamblock/master/filters/ublock-origin-gambling.txt |
+| AdGuard browser extension (**use lite**) | `filters/adguard-lite.txt` | https://raw.githubusercontent.com/konanguyen/gamblock/master/filters/adguard-lite.txt |
+| AdGuard app (Windows/macOS/Android) | `filters/adguard-gambling.txt` | https://raw.githubusercontent.com/konanguyen/gamblock/master/filters/adguard-gambling.txt |
 | AdGuard Home / AdGuard DNS | `data/domains.txt` | https://raw.githubusercontent.com/konanguyen/gamblock/master/data/domains.txt |
 | AdAway | `filters/adaway-hosts.txt` | https://raw.githubusercontent.com/konanguyen/gamblock/master/filters/adaway-hosts.txt |
+| AdAway (low-end devices) | `filters/adaway-lite-hosts.txt` | https://raw.githubusercontent.com/konanguyen/gamblock/master/filters/adaway-lite-hosts.txt |
 | Pi-hole / generic DNS sinkhole | `data/domains.txt` | https://raw.githubusercontent.com/konanguyen/gamblock/master/data/domains.txt |
+
+### Rule limits — read this before subscribing
+
+AdGuard Browser Extension on Chromium (Manifest V3) has a hard cap on **user-added rules**
+(Chrome dynamic rules). User rules, allowlisted sites **and custom filter subscriptions all
+count toward the same cap**. There is no way to fit the 397k-rule full list into it — you will
+see *"You've reached the limit of user-added rules"*.
+
+Recommended setup:
+
+1. Subscribe to the **lite** list (`adguard-lite.txt` / `ublock-lite.txt`) in the browser extension.
+   It contains ~3.1k high-confidence domains plus the cosmetic rules and stays far below any cap.
+2. Use the **full** list at DNS level (AdGuard Home, AdAway, Pi-hole) where there is no rule cap.
+   This is where the 397k domains actually protect you.
+3. Alternatively, use the AdGuard **desktop app**, which is not subject to the Chromium extension cap.
+
+The lite list is built from StevenBlack/hosts (gambling-only) + the curated list. It keeps the
+cosmetic rules that hide the animehay17.site banners.
 
 ### uBlock Origin
 
 1. Open the **uBO Dashboard** (`Filter lists` gear icon).
 2. Go to **Filter lists → Custom**.
-3. Paste the uBO raw URL above into the **Import** field.
+3. Paste the **uBO lite** raw URL above into the **Import** field (use the full list only if your browser tolerates it).
 4. Click **Apply changes**, then **Update now** if you want an immediate refresh.
 
 Alternatively, open the raw URL in a browser with uBO installed and confirm the subscription
@@ -92,11 +116,12 @@ prompt.
 
 1. Open **Settings → Ad blocking → Filters → Custom filters**.
 2. Click **+ / Add filter → Add a filter by subscription URL**.
-3. Paste the AdGuard raw URL above and confirm.
+3. Paste the **AdGuard lite** raw URL above and confirm (the full list will hit the rule cap inside a
+   Chromium extension; use it only in the AdGuard desktop app).
 4. The filter appears in your custom list and updates automatically.
 
 Do **not** use `data/domains.txt` here: the AdGuard app and extension understand ABP syntax
-and cosmetic rules, which are preserved in `filters/adguard-gambling.txt`.
+and cosmetic rules, which are preserved in both AdGuard filter files.
 
 ### AdGuard Home / AdGuard DNS
 

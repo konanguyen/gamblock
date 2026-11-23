@@ -1,8 +1,8 @@
 ! Title: Gamblock - Gambling & Betting Blocklist (AdGuard)
 ! Description: Chan cac trang ca cuoc, casino va ca do truc tuyen.
-! Homepage: https://github.com/gamblock/filters
-! Version: 2026.1123.1258
-! Last modified: 2026-11-23 12:58 UTC
+! Homepage: https://github.com/konanguyen/gamblock
+! Version: 2026.1123.1310
+! Last modified: 2026-11-23 13:10 UTC
 ! Expires: 1 day
 ! Syntax: Adblock Plus
 ! Entries: 397323
