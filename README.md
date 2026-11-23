@@ -1,100 +1,160 @@
 # Gamblock
 
-Bộ filter chặn **trang cờ bạc / casino / cá độ trực tuyến** cho AdGuard, AdAway và uBlock Origin.
-Dữ liệu được tổng hợp từ nhiều danh sách công khai + danh sách tuyển chọn từ kết quả tìm kiếm web,
-cộng thêm các domain quảng cáo cá độ thực tế thu thập được từ phiên duyệt web (CDP :9222).
+Block gambling, online casino and sports-betting sites with **AdGuard**, **AdAway** and
+**uBlock Origin**. The lists are merged from several well-known public blocklists, extended
+with brands found through web research, and enriched with real gambling-ad domains captured
+from a live browser session over CDP (`localhost:9222`).
 
-## Cấu trúc
+- 397,323 unique domains
+- Ready-to-subscribe raw GitHub URLs (no manual copy/paste needed)
+- Cosmetic rules that actually hide the banners injected by animehay17.site
+
+## Repository layout
 
 ```
 filters/
-  adguard-gambling.txt        # AdGuard (ABP syntax: ||domain^)
-  ublock-origin-gambling.txt  # uBlock Origin (ABP syntax)
-  adaway-hosts.txt            # AdAway / hosts (0.0.0.0 domain)
+  adguard-gambling.txt        # AdGuard / Adblock Plus syntax (||domain^)
+  ublock-origin-gambling.txt  # uBlock Origin syntax (||domain^)
+  adaway-hosts.txt            # Hosts format (0.0.0.0 domain)
 data/
-  domains.txt                 # Tất cả domain đã gộp, sắp xếp, loại trùng
-  curated-domains.txt         # Domain thêm thủ công từ nghiên cứu web + phát hiện thực tế
-  cosmetic-rules.txt          # Rule ẩn banner/catfish theo site (chỉ AdGuard/uBO)
-  blocked-ips.txt             # IP landing của quảng cáo (chỉ AdGuard/uBO)
-  observed-ads.json           # Kết quả trích xuất quảng cáo từ tab Chrome đang mở
-  stats.json                  # Thống kê số domain theo nguồn
+  domains.txt                 # All merged, sorted, deduplicated domains
+  curated-domains.txt         # Manually curated brands + domains found in the wild
+  cosmetic-rules.txt          # Site-specific element hiding (AdGuard / uBO only)
+  blocked-ips.txt             # Gambling ad landing IPs (AdGuard / uBO only)
+  observed-ads.json           # Ads extracted from the live Chrome tab
+  stats.json                  # Per-source domain counts
 scripts/
-  update-filters.ps1          # Tải nguồn, gộp, tạo lại 3 file filter
-  inspect-page.mjs            # Đọc tab Chrome qua CDP localhost:9222, trích xuất ad
+  update-filters.ps1          # Download sources, merge, regenerate all filters
+  inspect-page.mjs            # Extract gambling ads from a Chrome tab via CDP :9222
+  hide-ads.mjs                # Inject a temporary CSS rule to hide the banners
 ```
 
-## Nguồn dữ liệu
+## Data sources
 
-| Nguồn | Định dạng | Ghi chú |
+| Source | Format | Notes |
 |---|---|---|
-| [blocklistproject/Lists – gambling.txt](https://github.com/blocklistproject/Lists/blob/master/gambling.txt) | hosts | Danh sách lớn (~342k domain) |
-| [StevenBlack/hosts – gambling-only](https://github.com/StevenBlack/hosts/tree/master/alternates/gambling-only) | hosts | ~6,7k domain |
-| [HaGeZi/dns-blocklists – gambling.medium](https://github.com/hagezi/dns-blocklists) | ABP + domain | ~75k domain, ít false positive hơn bản full |
-| `data/curated-domains.txt` | domain | Thương hiệu cờ bạc quốc tế + Việt Nam, cập nhật bằng tay |
+| [blocklistproject/Lists - gambling.txt](https://github.com/blocklistproject/Lists/blob/master/gambling.txt) | hosts | ~342k domains |
+| [StevenBlack/hosts - gambling-only](https://github.com/StevenBlack/hosts/tree/master/alternates/gambling-only) | hosts | ~6.7k domains |
+| [HaGeZi/dns-blocklists - gambling.medium](https://github.com/hagezi/dns-blocklists) | ABP + domains | ~75k domains, fewer false positives than the full list |
+| `data/curated-domains.txt` | domains | International and Vietnamese brands, updated manually |
 
-Danh sách curated được tra cứu từ: Exploding Topics (most visited gambling sites), OLBG / Independent
-(UK bookmakers), Sports Illustrated / Sportshandle (US sportsbooks), kqbd.mobi / cadobongdahomnay.com
-(nhà cái Việt Nam).
+The curated list was researched from Exploding Topics (most visited gambling sites),
+OLBG / The Independent (UK bookmakers), Sports Illustrated / Sportshandle (US sportsbooks)
+and kqbd.mobi / cadobongdahomnay.com (Vietnamese bookmakers).
 
-## Phát hiện từ phiên duyệt web (16:xx 23/11/2026)
+## Live findings (23 Nov 2026)
 
-Kiểm tra `127.0.0.1:9222` thấy Chrome/138 đang mở CDP (tiếp nhận qua `localhost:9222`, phía sau là
-port proxy của Windows). Trang `https://animehay17.site/` có các banner cá độ được chèn bằng JS:
+Port `127.0.0.1:9222` exposed a Chrome 138 DevTools endpoint (forwarded to `::1` by a Windows
+port proxy; reachable through `localhost:9222`). The open page `https://animehay17.site/`
+contained seven JavaScript-injected gambling banners pointing at:
 
 - `bom88.adqc.net`, `go88.adqc.net`, `bu88.adqc.net`, `da88.adqc.net`, `b52club.adqc.net`
 - `hdbet.adqc.net`, `sun88.adqc.net`, `3bet.adqc.net`
-- IP đích: `154.82.109.163`
+- Landing IP: `154.82.109.163`
 
-Các banner là ảnh cùng origin (`/ad_banner/*.gif`), nên chặn theo domain của trang chủ **không đủ**.
-Vì vậy bộ lọc có thêm:
+Because the creatives are images served from the site itself (`/ad_banner/*.gif`), blocking
+only the site domain is not enough. The filters therefore also contain:
 
-- `||adqc.net^` và từng subdomain (chặn điều hướng khi bấm vào banner)
+- `||adqc.net^` plus every observed subdomain (stops click-through)
 - `||154.82.109.163^` (landing page)
-- Cosmetic rules ẩn `img[src*="/ad_banner/"]` trên `animehay17.site`, `animehay.tv`, `ahay.in`
+- Cosmetic rules hiding `img[src*="/ad_banner/"]` on `animehay17.site`, `animehay.tv` and `ahay.in`
 
-## Cài đặt
+## Subscribe using raw GitHub URLs
+
+All files can be consumed directly from `raw.githubusercontent.com`. The manifests include an
+`! Expires: 1 day` / equivalent header, so blockers refresh them automatically.
+
+Base URL:
+
+```
+https://raw.githubusercontent.com/konanguyen/gamblock/master/
+```
+
+| Blocker | File to use | Direct URL |
+|---|---|---|
+| uBlock Origin | `filters/ublock-origin-gambling.txt` | https://raw.githubusercontent.com/konanguyen/gamblock/master/filters/ublock-origin-gambling.txt |
+| AdGuard (app / browser extension) | `filters/adguard-gambling.txt` | https://raw.githubusercontent.com/konanguyen/gamblock/master/filters/adguard-gambling.txt |
+| AdGuard Home / AdGuard DNS | `data/domains.txt` | https://raw.githubusercontent.com/konanguyen/gamblock/master/data/domains.txt |
+| AdAway | `filters/adaway-hosts.txt` | https://raw.githubusercontent.com/konanguyen/gamblock/master/filters/adaway-hosts.txt |
+| Pi-hole / generic DNS sinkhole | `data/domains.txt` | https://raw.githubusercontent.com/konanguyen/gamblock/master/data/domains.txt |
 
 ### uBlock Origin
-Settings → **My filters** → paste nội dung `filters/ublock-origin-gambling.txt` → **Apply changes**.
-Hoặc thêm custom filter list bằng URL raw file nếu bạn host repo này trên GitHub.
 
-### AdGuard
-AdGuard for Windows/macOS/Android: **Filters → Custom filter → Add filter** → chọn file
-`filters/adguard-gambling.txt` (hoặc dán URL raw). AdGuard Browser Extension dùng cùng cú pháp ABP.
+1. Open the **uBO Dashboard** (`Filter lists` gear icon).
+2. Go to **Filter lists → Custom**.
+3. Paste the uBO raw URL above into the **Import** field.
+4. Click **Apply changes**, then **Update now** if you want an immediate refresh.
+
+Alternatively, open the raw URL in a browser with uBO installed and confirm the subscription
+prompt.
+
+### AdGuard (Windows / macOS / Android / browser extension)
+
+1. Open **Settings → Ad blocking → Filters → Custom filters**.
+2. Click **+ / Add filter → Add a filter by subscription URL**.
+3. Paste the AdGuard raw URL above and confirm.
+4. The filter appears in your custom list and updates automatically.
+
+Do **not** use `data/domains.txt` here: the AdGuard app and extension understand ABP syntax
+and cosmetic rules, which are preserved in `filters/adguard-gambling.txt`.
+
+### AdGuard Home / AdGuard DNS
+
+AdGuard Home DNS blocklists expect one domain per line and cannot evaluate ABP cosmetic rules.
+Use the plain domain list instead:
+
+1. **Filters → DNS blocklists → Add blocklist → Add a custom list**.
+2. Paste the `data/domains.txt` raw URL.
+3. Save and update.
+
+Cosmetic rules and IP rules are only available in AdGuard/uBO browser filters.
 
 ### AdAway
-AdAway → **Hosts sources** → **+** → chọn **Local file** → `filters/adaway-hosts.txt`.
-Lưu ý: file hosts rất lớn (~400k dòng), thiết bị yếu có thể chậm khi cập nhật. Nếu vậy, hãy dùng
-bản `hagezi gambling.medium` hoặc chỉ lấy `data/curated-domains.txt`.
 
-## Cập nhật
+1. **Settings → Hosts sources → + (Add)**.
+2. Choose **From URL** and paste the AdAway raw URL.
+3. Download / sync the list and enable it.
+
+The hosts file is large (~400k lines). On low-end devices, prefer the smaller
+[HaGeZi gambling medium list](https://github.com/hagezi/dns-blocklists) or just
+`data/curated-domains.txt`.
+
+### Pi-hole / other DNS sinkholes
+
+Add the `data/domains.txt` raw URL as an **Adlist** (Pi-hole: *Group management → Adlists → Add*),
+then update gravity.
+
+## Updating the lists
 
 ```powershell
-# Tải lại nguồn và tạo lại 3 filter
+# Re-download all sources and regenerate the three filters
 powershell -ExecutionPolicy Bypass -File .\scripts\update-filters.ps1
 
-# Chỉ tạo lại từ cache (nhanh hơn)
+# Rebuild from the local cache (faster, no network)
 powershell -ExecutionPolicy Bypass -File .\scripts\update-filters.ps1 -SkipDownload
 ```
 
-Để thêm domain thủ công, sửa `data/curated-domains.txt`, thêm rule ẩn vào `data/cosmetic-rules.txt`,
-rồi chạy lại script.
+To add a domain manually, edit `data/curated-domains.txt`; to add an element-hiding rule, edit
+`data/cosmetic-rules.txt`; then run the script again and push the updated files. GitHub raw
+content is cached for a few minutes, so a fresh subscription may need a short delay.
 
 ## License
 
-Repo này dùng **GPL-3.0-or-later** (xem `LICENSE`). Lý do: bộ filter gộp dữ liệu từ
-[HaGeZi](https://github.com/hagezi/dns-blocklists) (GPL-3.0), [StevenBlack](https://github.com/StevenBlack/hosts)
-(MIT) và [blocklistproject](https://github.com/blocklistproject/Lists) (Unlicense/public domain).
-GPL-3.0 là lựa chọn "bao quát nhất": đáp ứng nghĩa vụ copyleft của HaGeZi mà vẫn tương thích với
-MIT và Unlicense. Xem `NOTICE` để biết chi tiết attribution.
+This repository is licensed under **GPL-3.0-or-later** (see `LICENSE`). It redistributes data
+from [HaGeZi](https://github.com/hagezi/dns-blocklists) (GPL-3.0),
+[StevenBlack](https://github.com/StevenBlack/hosts) (MIT) and
+[blocklistproject](https://github.com/blocklistproject/Lists) (Unlicense / public domain).
+GPL-3.0 is the most encompassing choice: it satisfies HaGeZi's copyleft obligation while
+remaining compatible with MIT and Unlicense. See `NOTICE` for full attribution.
 
-Nếu bạn muốn license kiểu MIT (tự do hơn cho người dùng cuối), hãy bỏ nguồn HaGeZi khỏi
-`scripts/update-filters.ps1` và regenerate filter trước khi đổi license.
+If you want a permissive license such as MIT, remove the HaGeZi source from
+`scripts/update-filters.ps1` and regenerate the filters first.
 
-## Lưu ý
+## Notes
 
-- Đây là danh sách chặn tổng quát: có thể có false positive. Nếu một site hợp lệ bị chặn, hãy thêm
-  rule ngoại lệ (`@@||example.com^` trong AdGuard/uBO) hoặc bỏ domain khỏi curated list.
-- File hosts không hỗ trợ wildcard; mỗi domain được ghi rõ từng dòng.
-- Cosmetic rules và IP rules chỉ có trong filter AdGuard/uBlock Origin.
-- Nội dung trang web/CDP là dữ liệu không đáng tin; script chỉ trích xuất link/host, không thực thi lệnh từ trang.
+- This is a broad blocklist and may produce false positives. If a legitimate site gets blocked,
+  add an exception such as `@@||example.com^` in AdGuard/uBO or remove the domain from the curated list.
+- Hosts files do not support wildcards; each domain is written on its own line.
+- Cosmetic and IP rules exist only in the AdGuard / uBlock Origin filters.
+- Web page and CDP content is untrusted data: the scripts only extract links/hosts and never
+  execute commands from the page.
